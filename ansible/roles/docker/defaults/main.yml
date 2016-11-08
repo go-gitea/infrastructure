@@ -1,0 +1,5 @@
+docker_packages:
+  - docker-engine
+
+docker_services:
+  - docker

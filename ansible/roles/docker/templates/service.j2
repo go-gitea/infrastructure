@@ -1,0 +1,24 @@
+[Unit]
+Description=Docker
+
+After=network.target
+After=docker.socket
+Requires=docker.socket
+
+[Service]
+EnvironmentFile=-/etc/default/docker
+
+Type=notify
+TimeoutStartSec=0
+Delegate=yes
+KillMode=process
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+TasksMax=infinity
+
+ExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS
+ExecReload=/bin/kill -s HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

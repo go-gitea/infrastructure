@@ -1,0 +1,41 @@
+- name: key
+  apt_key:
+    keyserver: hkp://p80.pool.sks-keyservers.net:80
+    id: 58118E89F3A912897C070ADBF76221572C52609D
+    state: present
+
+- name: repo
+  apt_repository:
+    repo: deb https://apt.dockerproject.org/repo ubuntu-xenial main
+    filename: docker.list
+    update_cache: yes
+    state: present
+
+- name: install
+  with_items: '{{ docker_packages }}'
+  package:
+    name: '{{ item }}'
+    state: present
+
+- name: service
+  notify:
+    - restart docker
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/docker.service
+
+- name: default
+  notify:
+    - restart docker
+  template:
+    src: default.j2
+    dest: /etc/default/docker
+
+- name: start
+  with_items: '{{ docker_services }}'
+  systemd:
+    name: '{{ item }}'
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes

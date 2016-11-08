@@ -1,0 +1,62 @@
+- name: install
+  with_items:
+    - git
+  package:
+    name: '{{ item }}'
+    state: present
+
+- name: group
+  with_items: '{{ users }}'
+  when: item.name in users_available
+  group:
+    name: '{{ item.name }}'
+    gid: '{{ item.uid }}'
+    state: present
+
+- name: create
+  with_items: '{{ users }}'
+  when: item.name in users_available
+  user:
+    name: '{{ item.name }}'
+    uid: '{{ item.uid }}'
+    group: '{{ item.name }}'
+    shell: '{{ item.shell }}'
+    groups: '{{ item.groups | join(",") }}'
+    generate_ssh_key: yes
+    append: yes
+    createhome: yes
+    state: present
+
+- name: homeshick
+  with_items: '{{ users }}'
+  when: item.name in users_available
+  become: yes
+  become_user: '{{ item.name }}'
+  git:
+    repo: https://github.com/andsens/homeshick.git
+    dest: /home/{{ item.name }}/.homesick/repos/homeshick
+
+- name: castles
+  with_subelements: ['{{ users }}', castles]
+  when: item.0.name in users_available
+  become: yes
+  become_user: '{{ item.0.name }}'
+  git:
+    repo: https://github.com/{{ item.1 }}.git
+    dest: /home/{{ item.0.name }}/.homesick/repos/{{ item.1 | basename }}
+
+- name: links
+  with_subelements: ['{{ users }}', castles]
+  when: item.0.name in users_available
+  become: yes
+  become_user: '{{ item.0.name }}'
+  command: /home/{{ item.0.name }}/.homesick/repos/homeshick/bin/homeshick -f -b -q link {{ item.1 | basename }}
+
+- name: sshkeys
+  with_items: '{{ users }}'
+  when: item.name in users_available
+  authorized_key:
+    user: '{{ item.name }}'
+    key: '{{ item.sshkeys }}'
+    exclusive: yes
+    state: present

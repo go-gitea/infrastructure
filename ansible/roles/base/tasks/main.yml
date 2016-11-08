@@ -1,0 +1,7 @@
+- name: vars
+  include_vars: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: ubuntu
+  include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
