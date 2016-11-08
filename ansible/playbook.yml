@@ -4,3 +4,10 @@
     - root
     - users
     - docker
+    - traefik
+    - website
+    - docs
+    - blog
+    - lgtm
+    - coverage
+    - watchtower
