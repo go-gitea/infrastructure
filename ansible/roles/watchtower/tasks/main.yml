@@ -1,0 +1,21 @@
+- name: service
+  notify:
+    - restart watchtower
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/watchtower.service
+
+- name: default
+  notify:
+    - restart watchtower
+  template:
+    src: default.j2
+    dest: /etc/default/watchtower
+
+- name: start
+  systemd:
+    name: watchtower
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes

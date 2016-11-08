@@ -1,0 +1,5 @@
+- name: restart watchtower
+  systemd:
+    name: watchtower
+    state: restarted
+    daemon_reload: yes

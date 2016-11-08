@@ -1,0 +1,25 @@
+[Unit]
+Description=Watchtower
+
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+
+EnvironmentFile=/etc/default/watchtower
+ExecStop=/bin/sh -c '/usr/bin/docker ps | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
+ExecStartPre=/usr/bin/docker pull webhippie/watchtower:latest
+
+ExecStart=/usr/bin/docker run --rm \
+  --name %p \
+  --hostname watchtower.gitea.io \
+  --label traefik.enable=false \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  --env WATCHTOWER_CLEANUP=$WATCHTOWER_CLEANUP \
+  webhippie/watchtower:latest
+
+[Install]
+WantedBy=multi-user.target
