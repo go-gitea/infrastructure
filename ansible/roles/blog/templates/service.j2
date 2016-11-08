@@ -1,0 +1,23 @@
+[Unit]
+Description=Blog
+
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+
+EnvironmentFile=/etc/default/blog
+ExecStop=/bin/sh -c '/usr/bin/docker ps | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
+ExecStartPre=/usr/bin/docker pull gitea/blog:latest
+
+ExecStart=/usr/bin/docker run --rm \
+  --name %p \
+  --hostname blog.gitea.io \
+  --label traefik.frontend.rule=Host:blog.gitea.io \
+  gitea/blog:latest
+
+[Install]
+WantedBy=multi-user.target

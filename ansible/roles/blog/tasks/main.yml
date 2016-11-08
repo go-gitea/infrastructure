@@ -1,0 +1,21 @@
+- name: service
+  notify:
+    - restart blog
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/blog.service
+
+- name: default
+  notify:
+    - restart blog
+  template:
+    src: default.j2
+    dest: /etc/default/blog
+
+- name: start
+  systemd:
+    name: blog
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes
