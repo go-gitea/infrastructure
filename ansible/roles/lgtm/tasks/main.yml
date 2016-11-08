@@ -1,0 +1,21 @@
+- name: service
+  notify:
+    - restart lgtm
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/lgtm.service
+
+- name: default
+  notify:
+    - restart lgtm
+  template:
+    src: default.j2
+    dest: /etc/default/lgtm
+
+- name: start
+  systemd:
+    name: lgtm
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes

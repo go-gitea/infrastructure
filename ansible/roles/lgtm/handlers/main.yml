@@ -1,0 +1,5 @@
+- name: restart lgtm
+  systemd:
+    name: lgtm
+    state: restarted
+    daemon_reload: yes
