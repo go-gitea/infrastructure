@@ -1,0 +1,5 @@
+- name: restart coverage
+  systemd:
+    name: coverage
+    state: restarted
+    daemon_reload: yes

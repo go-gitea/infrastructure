@@ -1,0 +1,21 @@
+- name: service
+  notify:
+    - restart coverage
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/coverage.service
+
+- name: default
+  notify:
+    - restart coverage
+  template:
+    src: default.j2
+    dest: /etc/default/coverage
+
+- name: start
+  systemd:
+    name: coverage
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes
