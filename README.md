@@ -1,2 +1,1 @@
-# infrastructure
-Gitea: Infrastructure
+# Gitea: Infrastructure

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
+if [ -L $0 ]
+then
+    ROOT=$(realpath -e $(dirname $(readlink -e $0))/..)
+else
+    ROOT=$(realpath -e $(dirname $0)/..)
+fi
+
+if ! which ansible > /dev/null
+then
+    echo "Failed to detect ansible!"
+    exit 1
+fi
+
+exec ansible \
+  --private-key=${ROOT}/ssh/id_rsa \
+  --inventory-file=${ROOT}/ansible/hosts.ini $@

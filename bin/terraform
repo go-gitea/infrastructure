@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
+if [ -L $0 ]
+then
+    ROOT=$(realpath -e $(dirname $(readlink -e $0))/..)
+else
+    ROOT=$(realpath -e $(dirname $0)/..)
+fi
+
+if ! which terraform > /dev/null
+then
+    echo "Failed to detect terraform!"
+    exit 1
+fi
+
+pushd ${ROOT}/terraform > /dev/null
+    exec terraform $@
+popd > /dev/null
