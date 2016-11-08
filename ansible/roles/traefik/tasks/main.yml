@@ -1,0 +1,34 @@
+- name: acme
+  file:
+    path: /etc/acme.json
+    mode: u=rw,g-rwx,o-rrwx
+    state: touch
+
+- name: traefik
+  notify:
+    - restart traefik
+  template:
+    src: traefik.j2
+    dest: /etc/traefik.toml
+
+- name: service
+  notify:
+    - restart traefik
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/traefik.service
+
+- name: default
+  notify:
+    - restart traefik
+  template:
+    src: default.j2
+    dest: /etc/default/traefik
+
+- name: start
+  systemd:
+    name: traefik
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes

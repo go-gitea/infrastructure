@@ -1,0 +1,20 @@
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+    address = ":443"
+    [entryPoints.https.tls]
+
+[acme]
+email = "info@gitea.io"
+storageFile = "/etc/acme.json"
+entryPoint = "https"
+onDemand = true
+
+[docker]
+domain = "gitea.io"
+watch = true
