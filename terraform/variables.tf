@@ -56,29 +56,3 @@ variable "server_names" {
     "0" = "laozi"
   }
 }
-
-variable "server_volume_count" {
-  type    = "string"
-  default = "1"
-}
-
-variable "server_volume_size" {
-  type    = "string"
-  default = "150"
-}
-
-variable "server_volume_names" {
-  type = "map"
-
-  default = {
-    "0" = "laozi-01"
-  }
-}
-
-variable "server_volume_map" {
-  type = "map"
-
-  default = {
-    "0" = "0"
-  }
-}
