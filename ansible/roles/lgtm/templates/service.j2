@@ -12,17 +12,17 @@ EnvironmentFile=/etc/default/lgtm
 ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull lgtm/lgtm:latest
+ExecStartPre=/usr/bin/docker pull {{ lgtm_container }}
 
 ExecStart=/usr/bin/docker run --rm \
   --name %p \
-  --hostname lgtm.gitea.io \
-  --label traefik.frontend.rule=Host:lgtm.gitea.io \
+  --hostname {{ lgtm_domain }} \
+  --label traefik.frontend.rule=Host:{{ lgtm_domain }} \
   --volume /var/lib/lgtm:/var/lib/lgtm \
   --env GITHUB_CLIENT=${LGTM_GITHUB_CLIENT} \
   --env GITHUB_SECRET=${LGTM_GITHUB_SECRET} \
   --env DEBUG=${LGTM_DEBUG} \
-  lgtm/lgtm:latest
+  {{ lgtm_container }}
 
 [Install]
 WantedBy=multi-user.target

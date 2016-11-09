@@ -11,18 +11,18 @@ EnvironmentFile=/etc/default/traefik
 ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull containous/traefik:latest
+ExecStartPre=/usr/bin/docker pull {{ traefik_container }}
 
 ExecStart=/usr/bin/docker run --rm \
   --name %p \
-  --hostname server.gitea.io \
+  --hostname {{ traefik_domain }} \
   --label traefik.enable=false \
   --volume /etc/acme.json:/etc/acme.json \
   --volume /etc/traefik.toml:/etc/traefik.toml \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   --publish 443:443 \
   --publish 80:80 \
-  containous/traefik:latest -c /etc/traefik.toml
+  {{ traefik_container }} -c /etc/traefik.toml
 
 [Install]
 WantedBy=multi-user.target

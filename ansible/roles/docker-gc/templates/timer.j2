@@ -2,7 +2,7 @@
 Description=Docker GC
 
 [Timer]
-OnCalendar=daily
+OnCalendar={{ docker_gc_interval }}
 Persistent=true
 
 [Install]

@@ -9,4 +9,4 @@ Type=oneshot
 
 ExecStart=/usr/bin/docker run --rm \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  spotify/docker-gc
+  {{ docker_gc_container }}

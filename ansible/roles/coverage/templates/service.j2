@@ -12,19 +12,19 @@ EnvironmentFile=/etc/default/coverage
 ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull aircover/aircover:latest
+ExecStartPre=/usr/bin/docker pull {{ coverage_container }}
 
 ExecStart=/usr/bin/docker run --rm \
   --name %p \
-  --hostname coverage.gitea.io \
-  --label traefik.frontend.rule=Host:coverage.gitea.io \
+  --hostname {{ coverage_domain }} \
+  --label traefik.frontend.rule=Host:{{ coverage_domain }} \
   --volume /var/lib/coverage:/var/lib/aircover \
   --env GITHUB_CLIENT=${COVERAGE_GITHUB_CLIENT} \
   --env GITHUB_SECRET=${COVERAGE_GITHUB_SECRET} \
   --env TEAMS=${COVERAGE_TEAMS} \
   --env ADMINS=${COVERAGE_ADMINS} \
   --env DEBUG=${COVERAGE_DEBUG} \
-  aircover/aircover:latest
+  {{ coverage_container }}
 
 [Install]
 WantedBy=multi-user.target

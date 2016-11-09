@@ -11,15 +11,15 @@ EnvironmentFile=/etc/default/watchtower
 ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull webhippie/watchtower:latest
+ExecStartPre=/usr/bin/docker pull {{ watchtower_container }}
 
 ExecStart=/usr/bin/docker run --rm \
   --name %p \
-  --hostname watchtower.gitea.io \
+  --hostname %p \
   --label traefik.enable=false \
   --volume /var/run/docker.sock:/var/run/docker.sock \
-  --env WATCHTOWER_CLEANUP=$WATCHTOWER_CLEANUP \
-  webhippie/watchtower:latest
+  --env WATCHTOWER_CLEANUP=${WATCHTOWER_CLEANUP} \
+  {{ watchtower_container }}
 
 [Install]
 WantedBy=multi-user.target

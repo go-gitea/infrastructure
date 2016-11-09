@@ -1,0 +1,2 @@
+website_domain: gitea.io
+website_container: gitea/website:latest

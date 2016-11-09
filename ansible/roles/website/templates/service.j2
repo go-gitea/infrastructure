@@ -11,13 +11,13 @@ EnvironmentFile=/etc/default/website
 ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull gitea/website:latest
+ExecStartPre=/usr/bin/docker pull {{ website_container }}
 
 ExecStart=/usr/bin/docker run --rm \
   --name %p \
-  --hostname gitea.io \
-  --label traefik.frontend.rule=Host:gitea.io \
-  gitea/website:latest
+  --hostname {{ website_domain }} \
+  --label traefik.frontend.rule=Host:{{ website_domain }} \
+  {{ website_container }}
 
 [Install]
 WantedBy=multi-user.target

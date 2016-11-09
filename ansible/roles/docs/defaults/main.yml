@@ -1,0 +1,2 @@
+docs_domain: docs.gitea.io
+docs_container: gitea/docs:latest

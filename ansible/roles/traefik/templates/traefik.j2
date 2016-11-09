@@ -11,11 +11,11 @@ logLevel = "INFO"
     [entryPoints.https.tls]
 
 [acme]
-email = "info@gitea.io"
+email = "{{ traefik_email }}"
 storageFile = "/etc/acme.json"
 entryPoint = "https"
 onDemand = true
 
 [docker]
-domain = "gitea.io"
+domain = "{{ traefik_domain }}"
 watch = true
