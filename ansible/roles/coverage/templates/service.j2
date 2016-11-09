@@ -18,11 +18,12 @@ ExecStart=/usr/bin/docker run --rm \
   --name %p \
   --hostname coverage.gitea.io \
   --label traefik.frontend.rule=Host:coverage.gitea.io \
-  --env GITHUB_CLIENT=$COVERAGE_GITHUB_CLIENT \
-  --env GITHUB_SECRET=$COVERAGE_GITHUB_SECRET \
-  --env TEAMS=$COVERAGE_TEAMS \
-  --env ADMINS=$COVERAGE_ADMINS \
-  --env DEBUG=$COVERAGE_DEBUG \
+  --volume /var/lib/coverage:/var/lib/aircover \
+  --env GITHUB_CLIENT=${COVERAGE_GITHUB_CLIENT} \
+  --env GITHUB_SECRET=${COVERAGE_GITHUB_SECRET} \
+  --env TEAMS=${COVERAGE_TEAMS} \
+  --env ADMINS=${COVERAGE_ADMINS} \
+  --env DEBUG=${COVERAGE_DEBUG} \
   aircover/aircover:latest
 
 [Install]
