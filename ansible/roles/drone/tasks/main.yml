@@ -8,8 +8,8 @@
 
 - name: server
   include: server.yml
-  when: drone_type == 'server' || drone_type == 'both'
+  when: drone_type == 'server' or drone_type == 'both'
 
 - name: agent
   include: agent.yml
-  when: drone_type == 'agent' || drone_type == 'both'
+  when: drone_type == 'agent' or drone_type == 'both'
