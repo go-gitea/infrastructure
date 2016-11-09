@@ -8,9 +8,9 @@ After=docker.service
 Restart=always
 
 EnvironmentFile=/etc/default/website
-ExecStop=/bin/sh -c '/usr/bin/docker ps | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /usr/bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
+ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
 ExecStartPre=/usr/bin/docker pull gitea/website:latest
 
 ExecStart=/usr/bin/docker run --rm \
