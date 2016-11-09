@@ -20,7 +20,7 @@ resource "scaleway_server" "server" {
 
   volume {
     size_in_gb = 150
-    type = "l_ssd"
+    type       = "l_ssd"
   }
 }
 
