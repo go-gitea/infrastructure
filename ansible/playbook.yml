@@ -11,5 +11,6 @@
     - lgtm
     - coverage
     - drone
+    - minio
     - watchtower
     - docker-gc

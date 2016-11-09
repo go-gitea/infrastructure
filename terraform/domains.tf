@@ -35,6 +35,13 @@ resource "cloudflare_record" "dl" {
   type   = "CNAME"
 }
 
+resource "cloudflare_record" "storage" {
+  domain = "${var.cloudflare_domain}"
+  name   = "storage"
+  value  = "${cloudflare_record.servers.hostname}"
+  type   = "CNAME"
+}
+
 resource "cloudflare_record" "code" {
   domain = "${var.cloudflare_domain}"
   name   = "code"

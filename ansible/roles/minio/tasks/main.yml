@@ -1,0 +1,21 @@
+- name: service
+  notify:
+    - restart minio
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/minio.service
+
+- name: default
+  notify:
+    - restart minio
+  template:
+    src: default.j2
+    dest: /etc/default/minio
+
+- name: start
+  systemd:
+    name: minio
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes
