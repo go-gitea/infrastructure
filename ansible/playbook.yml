@@ -11,3 +11,4 @@
     - lgtm
     - coverage
     - watchtower
+    - docker-gc

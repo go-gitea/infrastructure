@@ -1,0 +1,5 @@
+- name: restart docker-gc
+  systemd:
+    name: docker-gc.timer
+    state: restarted
+    daemon_reload: yes
