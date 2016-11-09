@@ -1,0 +1,10 @@
+drone_type: both
+drone_container: drone/drone:0.5
+drone_domain: drone.gitea.io
+drone_github: true
+drone_open: true
+drone_orgs: go-gitea
+drone_admins: tboerger,lunny,bkcsoft
+drone_debug: true
+drone_plugin_pull: true
+drone_max_procs: 5

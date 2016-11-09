@@ -10,5 +10,6 @@
     - blog
     - lgtm
     - coverage
+    - drone
     - watchtower
     - docker-gc

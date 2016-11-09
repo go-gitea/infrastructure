@@ -1,0 +1,11 @@
+- name: restart drone
+  systemd:
+    name: drone
+    state: restarted
+    daemon_reload: yes
+
+- name: restart agent
+  systemd:
+    name: agent
+    state: restarted
+    daemon_reload: yes

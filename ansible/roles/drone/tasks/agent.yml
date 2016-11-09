@@ -1,0 +1,14 @@
+- name: agent service
+  notify:
+    - restart agent
+  template:
+    src: agent.j2
+    dest: /etc/systemd/system/agent.service
+
+- name: agent start
+  systemd:
+    name: agent
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes
