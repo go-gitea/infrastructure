@@ -15,6 +15,5 @@ then
 fi
 
 exec ansible-playbook \
-    --private-key=${ROOT}/ssh/id_rsa \
     --inventory-file=${ROOT}/ansible/hosts.ini \
     ${ROOT}/ansible/playbook.yml $@

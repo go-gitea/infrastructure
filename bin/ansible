@@ -15,5 +15,4 @@ then
 fi
 
 exec ansible \
-  --private-key=${ROOT}/ssh/id_rsa \
   --inventory-file=${ROOT}/ansible/hosts.ini $@
