@@ -1,0 +1,23 @@
+[Unit]
+Description=Code
+
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+
+EnvironmentFile=/etc/default/code
+ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
+ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
+ExecStartPre=/usr/bin/docker pull {{ code_container }}
+
+ExecStart=/usr/bin/docker run --rm \
+  --name %p \
+  --hostname {{ code_domain }} \
+  --label traefik.frontend.rule=Host:{{ code_domain }} \
+  {{ code_container }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2 @@
+code_domain: code.gitea.io
+code_container: gitea/redirects:latest
