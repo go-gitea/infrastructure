@@ -4,6 +4,14 @@ This repository presents the used scripting to setup our entire infrastructure
 used within the Gitea development. Feel free to use it or to improve it.
 We would be happy if you also brings back improvements to our infrastructure.
 
+## Docs
+
+* [Labels](docs/LABELS.md)
+
+## Terraform
+
+![Terraform](docs/terraform.png)
+
 ## Contributing
 
 Fork -> Patch -> Push -> Pull Request
