@@ -54,6 +54,7 @@ ghi label 'kind/feature' -c 006b75
 ghi label 'kind/proposal' -c 5319e7
 ghi label 'kind/security' -c 0052cc
 ghi label 'kind/testing' -c d4c5f9
+ghi label 'kind/translation' -c c0c0c0
 ghi label 'kind/ui' -c fef2c0
 ghi label 'lgtm/done' -c 0e8a16
 ghi label 'lgtm/need 1' -c f9d0c4
