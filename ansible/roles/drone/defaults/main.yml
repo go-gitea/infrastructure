@@ -7,4 +7,4 @@ drone_orgs: go-gitea
 drone_admins: tboerger,lunny,bkcsoft
 drone_debug: true
 drone_plugin_pull: true
-drone_max_procs: 5
+drone_max_procs: 10
