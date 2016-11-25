@@ -16,6 +16,11 @@ We would be happy if you also brings back improvements to our infrastructure.
 
 Fork -> Patch -> Push -> Pull Request
 
+## Authors
+
+* [Maintainers](https://github.com/orgs/go-gitea/people)
+* [Contributors](https://github.com/go-gitea/gitea/graphs/contributors)
+
 ## License
 
 This project is under the Apache-2.0 License. See the [LICENSE](LICENSE) file
