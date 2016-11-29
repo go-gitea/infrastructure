@@ -13,6 +13,7 @@ tool is out of the scope of this documentation.
 * kind/docs
 * kind/enhancement
 * kind/feature
+* kind/lint
 * kind/proposal
 * kind/question
 * kind/security
@@ -51,6 +52,7 @@ ghi label 'in progress' -c ededed
 ghi label 'kind/deployment' -c c5def5
 ghi label 'kind/docs' -c c2e0c6
 ghi label 'kind/feature' -c 006b75
+ghi label 'kind/lint' -c f9d0c4
 ghi label 'kind/proposal' -c 5319e7
 ghi label 'kind/security' -c 0052cc
 ghi label 'kind/testing' -c d4c5f9
