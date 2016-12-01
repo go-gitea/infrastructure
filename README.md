@@ -19,7 +19,7 @@ Fork -> Patch -> Push -> Pull Request
 ## Authors
 
 * [Maintainers](https://github.com/orgs/go-gitea/people)
-* [Contributors](https://github.com/go-gitea/gitea/graphs/contributors)
+* [Contributors](https://github.com/go-gitea/infrastructure/graphs/contributors)
 
 ## License
 
