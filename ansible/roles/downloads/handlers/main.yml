@@ -1,0 +1,5 @@
+- name: restart downloads
+  systemd:
+    name: downloads
+    state: restarted
+    daemon_reload: yes
