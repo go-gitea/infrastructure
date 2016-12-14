@@ -1,0 +1,50 @@
+#cloud-config
+
+write_files:
+  - path: /etc/ssh/sshd_config
+    content: |
+      Port ${ssh_port}
+      Protocol 2
+
+      AddressFamily any
+      ListenAddress 0.0.0.0
+      ListenAddress ::
+
+      SyslogFacility AUTH
+      LogLevel INFO
+
+      HostKey /etc/ssh/ssh_host_ed25519_key
+      HostKey /etc/ssh/ssh_host_rsa_key
+      HostKey /etc/ssh/ssh_host_dsa_key
+      HostKey /etc/ssh/ssh_host_ecdsa_key
+
+      KeyRegenerationInterval 3600
+      ServerKeyBits 1024
+      LoginGraceTime 120
+
+      UseDNS no
+      AllowAgentForwarding no
+      AllowTcpForwarding no
+      PrintMotd no
+      PrintLastLog no
+      PermitUserEnvironment yes
+      PermitRootLogin yes
+      ChallengeResponseAuthentication no
+      PasswordAuthentication no
+      PermitEmptyPasswords no
+      StrictModes yes
+      RSAAuthentication yes
+      PubkeyAuthentication yes
+      IgnoreRhosts yes
+      RhostsRSAAuthentication no
+      HostbasedAuthentication no
+      TCPKeepAlive yes
+      UsePrivilegeSeparation yes
+
+      X11Forwarding yes
+      X11DisplayOffset 10
+
+      AcceptEnv LANG LC_*
+      AuthorizedKeysFile %h/.ssh/authorized_keys
+      Banner none
+      Subsystem sftp /usr/lib/openssh/sftp-server

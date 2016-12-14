@@ -1,5 +1,5 @@
 [Unit]
-Description=Minio
+Description=Demo
 
 Requires=docker.service
 After=docker.service
@@ -7,21 +7,20 @@ After=docker.service
 [Service]
 Restart=always
 
-EnvironmentFile=/etc/default/secrets
-EnvironmentFile=/etc/default/minio
+EnvironmentFile=/etc/default/demo
 ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull {{ minio_container }}
+ExecStartPre=/usr/bin/docker pull {{ demo_container }}
 
 ExecStart=/usr/bin/docker run --rm \
   --name %p \
-  --hostname {{ minio_domain }} \
-  --label traefik.frontend.rule=Host:{{ minio_domain }} \
-  --volume /var/lib/minio:/var/lib/minio \
-  --env MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY} \
-  --env MINIO_SECRET_KEY=${MINIO_SECRET_KEY} \
-  {{ minio_container }}
+  --hostname {{ demo_domain }} \
+  --label traefik.frontend.rule=Host:{{ demo_domain }} \
+  --label traefik.port=3000 \
+  --volume /var/lib/gitea:/data \
+  --publish 22:22 \
+  {{ demo_container }}
 
 [Install]
 WantedBy=multi-user.target

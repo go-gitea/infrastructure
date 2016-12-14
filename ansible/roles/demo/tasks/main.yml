@@ -1,0 +1,21 @@
+- name: service
+  notify:
+    - restart demo
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/demo.service
+
+- name: default
+  notify:
+    - restart demo
+  template:
+    src: default.j2
+    dest: /etc/default/demo
+
+- name: start
+  systemd:
+    name: demo
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes

@@ -1,7 +1,5 @@
-provider "scaleway" {
-  access_key   = "${var.scaleway_access}"
-  organization = "${var.scaleway_org}"
-  region       = "${var.scaleway_region}"
+provider "digitalocean" {
+  token = "${var.do_token}"
 }
 
 provider "cloudflare" {

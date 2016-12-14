@@ -1,18 +1,33 @@
 - hosts: server
+  gather_facts: False
+
+  tasks:
+    - name: bootstrap
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: False
+
+- hosts: server
   roles:
     - base
     - root
     - users
     - docker
+    - watchtower
+    - docker-gc
     - traefik
+
+- hosts: dchi
+  roles:
+    - demo
+
+- hosts: pangu
+  roles:
+    - lgtm
+    - coverage
+    - drone
+    - minio
     - website
     - docs
     - blog
     - code
     - downloads
-    - lgtm
-    - coverage
-    - drone
-    - minio
-    - watchtower
-    - docker-gc
