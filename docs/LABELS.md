@@ -8,6 +8,7 @@ tool is out of the scope of this documentation.
 ## List
 
 * in progress
+* kind/api
 * kind/bug
 * kind/deployment
 * kind/docs
