@@ -1,0 +1,28 @@
+- name: prometheus
+  notify:
+    - restart prometheus
+  template:
+    src: prometheus.j2
+    dest: /etc/prometheus.yml
+
+- name: service
+  notify:
+    - restart prometheus
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/prometheus.service
+
+- name: default
+  notify:
+    - restart prometheus
+  template:
+    src: default.j2
+    dest: /etc/default/prometheus
+
+- name: start
+  systemd:
+    name: prometheus
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes

@@ -1,0 +1,1 @@
+prometheus_container: prom/prometheus:v1.5.1

@@ -15,6 +15,7 @@
     - watchtower
     - docker-gc
     - traefik
+    - prometheus
 
 - hosts: dchi
   roles:
