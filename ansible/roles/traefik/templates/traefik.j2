@@ -12,9 +12,10 @@ logLevel = "{{ traefik_loglevel }}"
 
 [acme]
 email = "{{ traefik_email }}"
-storageFile = "/etc/acme.json"
+storage = "/etc/acme.json"
 entryPoint = "https"
 onDemand = true
+dnsProvider = "cloudflare"
 
 [docker]
 domain = "{{ traefik_domain }}"

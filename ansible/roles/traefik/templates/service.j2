@@ -7,6 +7,7 @@ After=docker.service
 [Service]
 Restart=always
 
+EnvironmentFile=/etc/default/secrets
 EnvironmentFile=/etc/default/traefik
 ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
 ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
@@ -20,6 +21,8 @@ ExecStart=/usr/bin/docker run --rm \
   --volume /etc/acme.json:/etc/acme.json \
   --volume /etc/traefik.toml:/etc/traefik.toml \
   --volume /var/run/docker.sock:/var/run/docker.sock \
+  --env CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL} \
+  --env CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY} \
   --publish 443:443 \
   --publish 80:80 \
   {{ traefik_container }} -c /etc/traefik.toml
