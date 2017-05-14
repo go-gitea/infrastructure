@@ -1,5 +1,5 @@
 drone_type: both
-drone_container: drone/drone:0.5
+drone_container: drone/drone:0.6
 drone_domain: drone.gitea.io
 drone_github: true
 drone_open: true
