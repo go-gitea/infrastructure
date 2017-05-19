@@ -17,6 +17,7 @@ tool is out of the scope of this documentation.
 * kind/lint
 * kind/proposal
 * kind/question
+* kind/regression
 * kind/security
 * kind/testing
 * kind/ui
@@ -55,6 +56,7 @@ ghi label 'kind/docs' -c c2e0c6
 ghi label 'kind/feature' -c 006b75
 ghi label 'kind/lint' -c f9d0c4
 ghi label 'kind/proposal' -c 5319e7
+ghi label 'kind/regression' -c c92f0b
 ghi label 'kind/security' -c 0052cc
 ghi label 'kind/testing' -c d4c5f9
 ghi label 'kind/translation' -c c0c0c0
