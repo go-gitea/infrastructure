@@ -1,5 +1,7 @@
 # Gitea: Infrastructure
 
+[![Join the chat at https://img.shields.io/discord/322538954119184384.svg](https://img.shields.io/discord/322538954119184384.svg)](https://discord.gg/NsatcWJ)
+
 This repository presents the used scripting to setup our entire infrastructure
 used within the Gitea development. Feel free to use it or to improve it.
 We would be happy if you also brings back improvements to our infrastructure.
