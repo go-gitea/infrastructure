@@ -10,6 +10,7 @@ tool is out of the scope of this documentation.
 * in progress
 * kind/api
 * kind/bug
+* kind/breaking
 * kind/deployment
 * kind/docs
 * kind/enhancement
