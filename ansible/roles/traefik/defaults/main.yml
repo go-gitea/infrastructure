@@ -1,4 +1,10 @@
-traefik_container: containous/traefik:v1.2.3
+traefik_container: containous/traefik:v1.3.7
 traefik_domain: gitea.io
 traefik_email: info@gitea.io
 traefik_loglevel: INFO
+
+traefik_cloudflare_email:
+traefik_cloudflare_apikey:
+
+traefik_watchtower_container: webhippie/watchtower:latest
+traefik_watchtower_cleanup: true

@@ -1,2 +1,4 @@
+.vault
+
 playbook.retry
 terraform.tfstate.backup

@@ -4,6 +4,8 @@
   template:
     src: timer.j2
     dest: /etc/systemd/system/docker-gc.timer
+  tags:
+    - docker-gc
 
 - name: service
   notify:
@@ -11,6 +13,8 @@
   template:
     src: service.j2
     dest: /etc/systemd/system/docker-gc.service
+  tags:
+    - docker-gc
 
 - name: start
   systemd:
@@ -19,3 +23,5 @@
     daemon_reload: yes
     masked: no
     enabled: yes
+  tags:
+    - docker-gc

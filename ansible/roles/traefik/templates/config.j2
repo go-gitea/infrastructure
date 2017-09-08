@@ -1,0 +1,23 @@
+defaultEntryPoints = ["http", "https"]
+logLevel = "{{ traefik_loglevel }}"
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+    address = ":443"
+    [entryPoints.https.tls]
+
+[acme]
+  email = "{{ traefik_email }}"
+  storage = "/etc/acme.json"
+  entryPoint = "https"
+  onDemand = true
+  dnsProvider = "cloudflare"
+  acmeLogging = true
+
+[docker]
+  domain = "{{ traefik_domain }}"
+  watch = true

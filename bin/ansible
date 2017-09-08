@@ -14,5 +14,12 @@ then
     exit 1
 fi
 
+if ! test -f ${ROOT}/.vault
+then
+    echo "Failed to find .vault file!"
+    exit 1
+fi
+
 exec ansible \
-  --inventory-file=${ROOT}/ansible/hosts.ini $@
+    --vault-password-file=${ROOT}/.vault \
+    --inventory-file=${ROOT}/ansible/hosts.ini $@

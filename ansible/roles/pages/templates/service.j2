@@ -1,12 +1,12 @@
 [Unit]
-Description=LGTM
+Description=Pages
 
 Requires=docker.service
 After=docker.service
 
 [Service]
 Restart=always
-WorkingDirectory=/compose/lgtm
+WorkingDirectory=/compose/pages
 
 ExecStop=/bin/sh -c '/usr/local/bin/docker-compose kill || true'
 ExecStopPost=/bin/sh -c '/usr/local/bin/docker-compose down --remove-orphans || true'

@@ -1,10 +1,17 @@
-drone_type: both
-drone_container: drone/drone:0.5
-drone_domain: drone.gitea.io
-drone_github: true
-drone_open: true
-drone_orgs: go-gitea
-drone_admins: tboerger,lunny,bkcsoft
+drone_server: drone/drone:0.8
+drone_agent: drone/agent:0.8
+drone_domain:
 drone_debug: true
-drone_plugin_pull: true
-drone_max_procs: 1
+drone_open: true
+drone_orgs:
+drone_admins:
+drone_max_procs: 2
+drone_secret:
+
+drone_github: false
+drone_github_client:
+drone_github_secret:
+
+drone_gitea: false
+drone_gitea_url:
+drone_gitea_skip_verify: false

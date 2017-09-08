@@ -6,20 +6,13 @@ After=docker.service
 
 [Service]
 Restart=always
+WorkingDirectory=/compose/downloads
 
-EnvironmentFile=/etc/default/downloads
-ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull abiosoft/caddy:latest
+ExecStop=/bin/sh -c '/usr/local/bin/docker-compose kill || true'
+ExecStopPost=/bin/sh -c '/usr/local/bin/docker-compose down --remove-orphans || true'
 
-ExecStart=/usr/bin/docker run --rm \
-  --name %p \
-  --hostname {{ downloads_domain }} \
-  --label traefik.frontend.rule=Host:{{ downloads_domain }} \
-  --label traefik.port=2015 \
-  --volume /var/lib/minio/releases:/srv \
-  abiosoft/caddy:latest
+ExecStartPre=/bin/sh -c '/usr/local/bin/docker-compose pull --ignore-pull-failures || true'
+ExecStart=/usr/local/bin/docker-compose up --abort-on-container-exit --remove-orphans
 
 [Install]
 WantedBy=multi-user.target

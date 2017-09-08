@@ -1,2 +1,0 @@
-minio_container: webhippie/minio:latest
-minio_domain: storage.gitea.io

@@ -4,6 +4,8 @@
   package:
     name: '{{ item }}'
     state: present
+  tags:
+    - users
 
 - name: group
   with_items: '{{ users }}'
@@ -12,6 +14,8 @@
     name: '{{ item.name }}'
     gid: '{{ item.uid }}'
     state: present
+  tags:
+    - users
 
 - name: create
   with_items: '{{ users }}'
@@ -26,6 +30,8 @@
     append: yes
     createhome: yes
     state: present
+  tags:
+    - users
 
 - name: homeshick
   with_items: '{{ users }}'
@@ -35,6 +41,8 @@
   git:
     repo: https://github.com/andsens/homeshick.git
     dest: /home/{{ item.name }}/.homesick/repos/homeshick
+  tags:
+    - users
 
 - name: castles
   with_subelements: ['{{ users }}', castles]
@@ -44,6 +52,8 @@
   git:
     repo: https://github.com/{{ item.1 }}.git
     dest: /home/{{ item.0.name }}/.homesick/repos/{{ item.1 | basename }}
+  tags:
+    - users
 
 - name: links
   with_subelements: ['{{ users }}', castles]
@@ -51,6 +61,8 @@
   become: yes
   become_user: '{{ item.0.name }}'
   command: /home/{{ item.0.name }}/.homesick/repos/homeshick/bin/homeshick -f -b -q link {{ item.1 | basename }}
+  tags:
+    - users
 
 - name: sshkeys
   with_items: '{{ users }}'
@@ -60,3 +72,5 @@
     key: '{{ item.sshkeys }}'
     exclusive: yes
     state: present
+  tags:
+    - users

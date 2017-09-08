@@ -1,0 +1,52 @@
+version: "3"
+
+networks:
+  traefik:
+    external:
+      name: traefik_general
+
+volumes:
+  server:
+    driver: local
+
+services:
+  server:
+    image: ${DOWNLOADS_CONTAINER}
+    restart: always
+    environment:
+      - CADDY_WEBROOT=/var/lib/minio/releases
+    networks:
+      - traefik
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=8080
+      - traefik.frontend.rule=Host:${DOWNLOADS_DOMAIN}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - server:/var/lib/minio
+
+  minio:
+    image: ${MINIO_CONTAINER}
+    restart: always
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS}
+      - MINIO_SECRET_KEY=${MINIO_SECRET}
+    networks:
+      - traefik
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=9000
+      - traefik.frontend.rule=Host:${MINIO_DOMAIN}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - server:/var/lib/minio

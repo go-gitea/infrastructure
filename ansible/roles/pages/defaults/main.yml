@@ -1,0 +1,11 @@
+pages_redirects_container: gitea/redirects:latest
+pages_redirects_domain: code.gitea.io
+
+pages_blog_container: gitea/blog:latest
+pages_blog_domain: blog.gitea.io
+
+pages_docs_container: gitea/docs:latest
+pages_docs_domain: docs.gitea.io
+
+pages_website_container: gitea/website:latest
+pages_website_domain: gitea.io

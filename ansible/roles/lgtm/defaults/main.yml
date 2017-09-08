@@ -1,3 +1,5 @@
 lgtm_container: gitea/lgtm:latest
 lgtm_domain: lgtm.gitea.io
-lgtm_debug: true
+lgtm_debug: false
+lgtm_client:
+lgtm_secret:

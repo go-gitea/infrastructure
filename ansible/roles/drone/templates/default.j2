@@ -1,8 +1,18 @@
-DRONE_GITHUB={{ drone_github }}
-DRONE_OPEN={{ drone_open }}
-DRONE_ORGS={{ drone_orgs }}
-DRONE_ADMIN={{ drone_admins }}
-DRONE_DEBUG={{ drone_debug }}
-DRONE_SERVER=wss://{{ drone_domain }}/ws/broker
-DRONE_PLUGIN_PULL={{ drone_plugin_pull }}
-DRONE_DOCKER_MAX_PROCS={{ drone_max_procs }}
+DRONE_SERVER={{ drone_server }}
+DRONE_AGENT={{ drone_agent }}
+DRONE_DOMAIN={{ drone_domain }}
+DRONE_SERVER_HOST=https://{{ drone_domain }}
+DRONE_DEBUG={{ drone_debug | default(False) | lower }}
+DRONE_SECRET={{ drone_secret }}
+DRONE_OPEN={{ drone_open | default(False) | lower }}
+DRONE_ORGS={{ drone_orgs | default("") }}
+DRONE_ADMIN={{ drone_admins | default("") }}
+DRONE_MAX_PROCS={{ drone_max_procs | default(5) }}
+
+DRONE_GITHUB={{ drone_github | default(False) | lower }}
+DRONE_GITHUB_CLIENT={{ drone_github_client | default("") }}
+DRONE_GITHUB_SECRET={{ drone_github_secret | default("") }}
+
+DRONE_GITEA={{ drone_gitea | default(False) | lower }}
+DRONE_GITEA_URL={{ drone_gitea_url | default("") }}
+DRONE_GITEA_SKIP_VERIFY={{ drone_gitea_skip_verify | default(False) | lower }}

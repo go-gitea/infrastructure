@@ -1,0 +1,34 @@
+version: "3"
+
+networks:
+  traefik:
+    external:
+      name: traefik_general
+
+volumes:
+  server:
+    driver: local
+
+services:
+  server:
+    image: ${LGTM_CONTAINER}
+    restart: always
+    environment:
+      - DEBUG=${LGTM_DEBUG}
+      - GITHUB_CLIENT=${LGTM_CLIENT}
+      - GITHUB_SECRET=${LGTM_SECRET}
+    networks:
+      - traefik
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=8000
+      - traefik.frontend.rule=Host:${LGTM_DOMAIN}
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - server:/var/lib/lgtm
+

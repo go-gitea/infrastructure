@@ -1,0 +1,42 @@
+version: "3"
+
+networks:
+  general:
+    driver: bridge
+
+services:
+  server:
+    image: ${TRAEFIK_CONTAINER}
+    restart: always
+    command: -c /etc/traefik.toml
+    environment:
+      - CLOUDFLARE_EMAIL=${TRAEFIK_CLOUDFLARE_EMAIL}
+      - CLOUDFLARE_API_KEY=${TRAEFIK_CLOUDFLARE_APIKEY}
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - general
+    labels:
+      - traefik.enable=false
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/acme.json:/etc/acme.json
+      - /etc/traefik.toml:/etc/traefik.toml
+
+  watchtower:
+    image: ${TRAEFIK_WATCHTOWER_CONTAINER}
+    restart: always
+    environment:
+      - WATCHTOWER_CLEANUP=${TRAEFIK_WATCHTOWER_CLEANUP}
+    labels:
+      - traefik.enable=false
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - /var/run/docker.sock:/var/run/docker.sock

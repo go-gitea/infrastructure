@@ -1,0 +1,40 @@
+version: "3"
+
+networks:
+  traefik:
+    external:
+      name: traefik_general
+  internal:
+    external: false
+
+volumes:
+  git:
+    driver: local
+  gitea:
+    driver: local
+  ssh:
+    driver: local
+
+services:
+  server:
+    image: ${DEMO_CONTAINER}
+    restart: always
+    networks:
+      - traefik
+      - internal
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=3000
+      - traefik.frontend.rule=Host:${DEMO_DOMAIN}
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - git:/data/git
+      - gitea:/data/gitea
+      - ssh:/data/ssh
+    ports:
+      - ${DEMO_SSH}:22

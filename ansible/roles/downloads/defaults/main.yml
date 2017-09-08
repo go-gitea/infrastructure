@@ -1,1 +1,7 @@
+downloads_container: webhippie/caddy:latest
 downloads_domain: dl.gitea.io
+
+minio_container: webhippie/minio:latest
+minio_domain: storage.gitea.io
+minio_access:
+minio_secret:

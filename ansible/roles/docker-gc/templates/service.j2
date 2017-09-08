@@ -9,4 +9,5 @@ Type=oneshot
 
 ExecStart=/usr/bin/docker run --rm \
   --volume /var/run/docker.sock:/var/run/docker.sock \
+  --volume /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
   {{ docker_gc_container }}

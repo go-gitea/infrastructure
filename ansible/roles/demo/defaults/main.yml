@@ -1,2 +1,3 @@
-demo_domain: try.gitea.io
 demo_container: gitea/gitea:latest
+demo_domain: try.gitea.io
+demo_ssh: 22

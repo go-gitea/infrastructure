@@ -1,15 +1,47 @@
 - name: acme
-  file:
-    path: /etc/acme.json
-    mode: u=rw,g-rwx,o-rrwx
-    state: touch
+  copy:
+    content: ""
+    dest: /etc/acme.json
+    mode: u=rw,g=,o=
+    force: no
+  tags:
+    - traefik
 
-- name: traefik
+- name: config
   notify:
     - restart traefik
   template:
-    src: traefik.j2
+    src: config.j2
     dest: /etc/traefik.toml
+  tags:
+    - traefik
+
+- name: dirs
+  with_items:
+    - /compose/traefik
+  file:
+    path: '{{ item }}'
+    state: directory
+  tags:
+    - traefik
+
+- name: compose
+  notify:
+    - restart traefik
+  template:
+    src: compose.j2
+    dest: /compose/traefik/docker-compose.yml
+  tags:
+    - traefik
+
+- name: default
+  notify:
+    - restart traefik
+  template:
+    src: default.j2
+    dest: /compose/traefik/.env
+  tags:
+    - traefik
 
 - name: service
   notify:
@@ -17,13 +49,8 @@
   template:
     src: service.j2
     dest: /etc/systemd/system/traefik.service
-
-- name: default
-  notify:
-    - restart traefik
-  template:
-    src: default.j2
-    dest: /etc/default/traefik
+  tags:
+    - traefik
 
 - name: start
   systemd:
@@ -32,3 +59,5 @@
     daemon_reload: yes
     masked: no
     enabled: yes
+  tags:
+    - traefik

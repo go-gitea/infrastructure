@@ -1,0 +1,72 @@
+version: "3"
+
+networks:
+  traefik:
+    external:
+      name: traefik_general
+  internal:
+    external: false
+
+volumes:
+  server:
+    driver: local
+
+services:
+  server:
+    image: ${DRONE_SERVER}
+    restart: always
+    environment:
+      - DRONE_GITHUB=${DRONE_GITHUB}
+      - DRONE_GITHUB_CLIENT=${DRONE_GITHUB_CLIENT}
+      - DRONE_GITHUB_SECRET=${DRONE_GITHUB_SECRET}
+      - DRONE_GOGS=${DRONE_GITEA}
+      - DRONE_GOGS_URL=${DRONE_GITEA_URL}
+      - DRONE_GOGS_SKIP_VERIFY=${DRONE_GITEA_SKIP_VERIFY}
+      - DRONE_DEBUG=${DRONE_DEBUG}
+      - DRONE_SECRET=${DRONE_SECRET}
+      - DRONE_OPEN=${DRONE_OPEN}
+      - DRONE_ORGS=${DRONE_ORGS}
+      - DRONE_ADMIN=${DRONE_ADMIN}
+      - DRONE_HOST=https://${DRONE_DOMAIN}
+      - DRONE_VOLUME=/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - DRONE_NETWORK=drone_internal
+      - DATABASE_DRIVER=sqlite3
+      - DATABASE_CONFIG=/var/lib/drone/database.sqlite3
+    networks:
+      - traefik
+      - internal
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=8000
+      - traefik.frontend.rule=Host:${DRONE_DOMAIN}
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - server:/var/lib/drone
+
+  agent:
+    image: ${DRONE_AGENT}
+    restart: always
+    environment:
+      - DRONE_SERVER=server:9000
+      - DRONE_DEBUG=${DRONE_DEBUG}
+      - DRONE_SECRET=${DRONE_SECRET}
+      - DRONE_MAX_PROCS=${DRONE_MAX_PROCS}
+    networks:
+      - internal
+    depends_on:
+      - server
+    labels:
+      - traefik.enable=false
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - /var/run/docker.sock:/var/run/docker.sock

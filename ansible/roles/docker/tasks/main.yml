@@ -1,21 +1,43 @@
-- name: key
+- name: deps
+  with_items: '{{ docker_deps }}'
+  package:
+    name: '{{ item }}'
+    state: present
+  tags:
+    - docker
+
+- name: key1
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    state: present
+  tags:
+    - docker
+
+- name: key2
   apt_key:
     keyserver: hkp://p80.pool.sks-keyservers.net:80
     id: 58118E89F3A912897C070ADBF76221572C52609D
     state: present
+  tags:
+    - docker
 
 - name: repo
   apt_repository:
-    repo: deb https://apt.dockerproject.org/repo ubuntu-xenial main
-    filename: docker.list
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+    filename: docker
     update_cache: yes
     state: present
+  tags:
+    - docker
 
 - name: install
   with_items: '{{ docker_packages }}'
   package:
     name: '{{ item }}'
     state: present
+  tags:
+    - docker
 
 - name: service
   notify:
@@ -23,6 +45,8 @@
   template:
     src: service.j2
     dest: /etc/systemd/system/docker.service
+  tags:
+    - docker
 
 - name: default
   notify:
@@ -30,6 +54,8 @@
   template:
     src: default.j2
     dest: /etc/default/docker
+  tags:
+    - docker
 
 - name: start
   with_items: '{{ docker_services }}'
@@ -39,3 +65,14 @@
     daemon_reload: yes
     masked: no
     enabled: yes
+  tags:
+    - docker
+
+- name: compose
+  get_url:
+    url: '{{ docker_compose_url }}'
+    dest: /usr/local/bin/docker-compose
+    checksum: sha1:{{ docker_compose_checksum }}
+    mode: u=rwx,g=rx,o=rx
+  tags:
+    - docker

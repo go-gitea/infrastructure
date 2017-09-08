@@ -12,22 +12,17 @@
     - root
     - users
     - docker
-    - watchtower
     - docker-gc
     - traefik
 
 - hosts: dchi
   roles:
+    - drone
     - demo
 
 - hosts: pangu
   roles:
-    - lgtm
-    - coverage
     - drone
-    - minio
-    - website
-    - docs
-    - blog
-    - code
+    - pages
     - downloads
+    - lgtm

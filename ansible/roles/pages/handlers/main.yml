@@ -1,5 +1,5 @@
-- name: restart drone
+- name: restart pages
   systemd:
-    name: drone
+    name: pages
     state: restarted
     daemon_reload: yes

@@ -1,45 +1,45 @@
 - name: dirs
   with_items:
-    - /compose/demo
+    - /compose/pages
   file:
     path: '{{ item }}'
     state: directory
   tags:
-    - demo
+    - pages
 
 - name: compose
   notify:
-    - restart demo
+    - restart pages
   template:
     src: compose.j2
-    dest: /compose/demo/docker-compose.yml
+    dest: /compose/pages/docker-compose.yml
   tags:
-    - demo
+    - pages
 
 - name: default
   notify:
-    - restart demo
+    - restart pages
   template:
     src: default.j2
-    dest: /compose/demo/.env
+    dest: /compose/pages/.env
   tags:
-    - demo
+    - pages
 
 - name: service
   notify:
-    - restart demo
+    - restart pages
   template:
     src: service.j2
-    dest: /etc/systemd/system/demo.service
+    dest: /etc/systemd/system/pages.service
   tags:
-    - demo
+    - pages
 
 - name: start
   systemd:
-    name: demo
+    name: pages
     state: started
     daemon_reload: yes
     masked: no
     enabled: yes
   tags:
-    - demo
+    - pages

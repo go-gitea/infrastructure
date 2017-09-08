@@ -4,11 +4,15 @@
   package:
     name: '{{ item }}'
     state: present
+  tags:
+    - root
 
 - name: homeshick
   git:
     repo: https://github.com/andsens/homeshick.git
     dest: /root/.homesick/repos/homeshick
+  tags:
+    - root
 
 - name: castles
   with_items: '{{ root_castles }}'
@@ -16,21 +20,23 @@
   git:
     repo: https://github.com/{{ item }}.git
     dest: /root/.homesick/repos/{{ item | basename }}
+  tags:
+    - root
 
 - name: links
   with_items: '{{ root_castles }}'
   when: root_castles|default(None) != None
   command: /root/.homesick/repos/homeshick/bin/homeshick -f -b -q link {{ item | basename }}
+  tags:
+    - root
 
 - name: sshkeys
   when: root_sshkeys|default(None) != None
   authorized_key:
     user: root
     key: '{{ root_sshkeys }}'
-    path: /root/.ssh/instance_keys
+    path: /root/.ssh/authorized_keys
     exclusive: yes
     state: present
-
-- name: fetchkeys
-  when: root_sshkeys|default(None) != None
-  command: scw-fetch-ssh-keys --upgrade
+  tags:
+    - root

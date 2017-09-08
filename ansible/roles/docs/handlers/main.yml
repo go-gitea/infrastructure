@@ -1,5 +1,0 @@
-- name: restart docs
-  systemd:
-    name: docs
-    state: restarted
-    daemon_reload: yes

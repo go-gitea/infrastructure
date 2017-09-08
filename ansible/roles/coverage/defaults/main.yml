@@ -1,5 +1,0 @@
-coverage_container: aircover/aircover:latest
-coverage_domain: coverage.gitea.io
-coverage_debug: true
-coverage_teams: go-gitea
-coverage_admins: tboerger,lunny,bkcsoft

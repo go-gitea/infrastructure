@@ -1,7 +1,15 @@
+docker_deps:
+  - apt-transport-https
+  - ca-certificates
+  - software-properties-common
+
 docker_packages:
-  - docker-engine
+  - docker-ce
 
 docker_services:
   - docker
+
+docker_compose_url: https://github.com/docker/compose/releases/download/1.14.0/docker-compose-Linux-x86_64
+docker_compose_checksum: eda2bcd4077daacb763e0745764b9b722bcf4fc6
 
 docker_opts:

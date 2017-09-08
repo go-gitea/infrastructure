@@ -1,0 +1,75 @@
+version: "3"
+
+networks:
+  traefik:
+    external:
+      name: traefik_general
+
+services:
+  redirects:
+    image: ${PAGES_REDIRECTS_CONTAINER}
+    restart: always
+    networks:
+      - traefik
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=80
+      - traefik.frontend.rule=Host:${PAGES_REDIRECTS_DOMAIN}
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+
+  blog:
+    image: ${PAGES_BLOG_CONTAINER}
+    restart: always
+    networks:
+      - traefik
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=80
+      - traefik.frontend.rule=Host:${PAGES_BLOG_DOMAIN}
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+
+  docs:
+    image: ${PAGES_DOCS_CONTAINER}
+    restart: always
+    networks:
+      - traefik
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=80
+      - traefik.frontend.rule=Host:${PAGES_DOCS_DOMAIN}
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+
+  website:
+    image: ${PAGES_WEBSITE_CONTAINER}
+    restart: always
+    networks:
+      - traefik
+    labels:
+      - traefik.docker.network=traefik_general
+      - traefik.port=80
+      - traefik.frontend.rule=Host:${PAGES_WEBSITE_DOMAIN}
+    healthcheck:
+      test: ["NONE"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro

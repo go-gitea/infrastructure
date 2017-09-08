@@ -1,15 +1,45 @@
+- name: dirs
+  with_items:
+    - /compose/drone
+  file:
+    path: '{{ item }}'
+    state: directory
+  tags:
+    - drone
+
+- name: compose
+  notify:
+    - restart drone
+  template:
+    src: compose.j2
+    dest: /compose/drone/docker-compose.yml
+  tags:
+    - drone
+
 - name: default
   notify:
-    - restart agent
-    - restart server
+    - restart drone
   template:
     src: default.j2
-    dest: /etc/default/drone
+    dest: /compose/drone/.env
+  tags:
+    - drone
 
-- name: server
-  include: server.yml
-  when: drone_type == 'server' or drone_type == 'both'
+- name: service
+  notify:
+    - restart drone
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/drone.service
+  tags:
+    - drone
 
-- name: agent
-  include: agent.yml
-  when: drone_type == 'agent' or drone_type == 'both'
+- name: start
+  systemd:
+    name: drone
+    state: started
+    daemon_reload: yes
+    masked: no
+    enabled: yes
+  tags:
+    - drone

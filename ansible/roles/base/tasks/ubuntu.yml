@@ -3,3 +3,5 @@
   package:
     name: '{{ item }}'
     state: present
+  tags:
+    - base

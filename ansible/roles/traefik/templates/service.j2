@@ -6,26 +6,14 @@ After=docker.service
 
 [Service]
 Restart=always
+WorkingDirectory=/compose/traefik
+TimeoutStartSec=300
 
-EnvironmentFile=/etc/default/secrets
-EnvironmentFile=/etc/default/traefik
-ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull {{ traefik_container }}
+ExecStop=/bin/sh -c '/usr/local/bin/docker-compose kill || true'
+ExecStopPost=/bin/sh -c '/usr/local/bin/docker-compose down --remove-orphans || true'
 
-ExecStart=/usr/bin/docker run --rm \
-  --name %p \
-  --hostname {{ traefik_domain }} \
-  --label traefik.enable=false \
-  --volume /etc/acme.json:/etc/acme.json \
-  --volume /etc/traefik.toml:/etc/traefik.toml \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --env CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL} \
-  --env CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY} \
-  --publish 443:443 \
-  --publish 80:80 \
-  {{ traefik_container }} -c /etc/traefik.toml
+ExecStartPre=/bin/sh -c '/usr/local/bin/docker-compose pull --ignore-pull-failures || true'
+ExecStart=/usr/local/bin/docker-compose up --abort-on-container-exit --remove-orphans
 
 [Install]
 WantedBy=multi-user.target

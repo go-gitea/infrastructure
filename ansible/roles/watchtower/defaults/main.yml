@@ -1,2 +1,0 @@
-watchtower_container: webhippie/watchtower:latest
-watchtower_cleanup: true

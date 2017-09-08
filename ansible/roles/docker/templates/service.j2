@@ -12,10 +12,13 @@ Type=notify
 TimeoutStartSec=0
 Delegate=yes
 KillMode=process
-LimitNOFILE=infinity
+LimitNOFILE=1048576
 LimitNPROC=infinity
 LimitCORE=infinity
 TasksMax=infinity
+Restart=on-failure
+StartLimitBurst=3
+StartLimitInterval=60s
 
 ExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS
 ExecReload=/bin/kill -s HUP $MAINPID

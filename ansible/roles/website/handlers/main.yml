@@ -1,5 +1,0 @@
-- name: restart website
-  systemd:
-    name: website
-    state: restarted
-    daemon_reload: yes

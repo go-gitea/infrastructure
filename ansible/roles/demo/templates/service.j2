@@ -6,21 +6,13 @@ After=docker.service
 
 [Service]
 Restart=always
+WorkingDirectory=/compose/demo
 
-EnvironmentFile=/etc/default/demo
-ExecStop=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker stop %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps | /bin/grep %p 1> /dev/null && /usr/bin/docker kill %p || true'
-ExecStartPre=/bin/sh -c '/usr/bin/docker ps -a | /bin/grep %p 1> /dev/null && /usr/bin/docker rm %p || true'
-ExecStartPre=/usr/bin/docker pull {{ demo_container }}
+ExecStop=/bin/sh -c '/usr/local/bin/docker-compose kill || true'
+ExecStopPost=/bin/sh -c '/usr/local/bin/docker-compose down --remove-orphans || true'
 
-ExecStart=/usr/bin/docker run --rm \
-  --name %p \
-  --hostname {{ demo_domain }} \
-  --label traefik.frontend.rule=Host:{{ demo_domain }} \
-  --label traefik.port=3000 \
-  --volume /var/lib/gitea:/data \
-  --publish 22:22 \
-  {{ demo_container }}
+ExecStartPre=/bin/sh -c '/usr/local/bin/docker-compose pull --ignore-pull-failures || true'
+ExecStart=/usr/local/bin/docker-compose up --abort-on-container-exit --remove-orphans
 
 [Install]
 WantedBy=multi-user.target

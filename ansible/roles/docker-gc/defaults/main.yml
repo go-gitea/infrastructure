@@ -1,2 +1,2 @@
-docker_gc_container: spotify/docker-gc
+docker_gc_container: spotify/docker-gc:latest
 docker_gc_interval: daily
