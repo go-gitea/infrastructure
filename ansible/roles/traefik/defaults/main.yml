@@ -1,4 +1,4 @@
-traefik_container: containous/traefik:v1.3.7
+traefik_container: traefik:v1.4.5
 traefik_domain: gitea.io
 traefik_email: info@gitea.io
 traefik_loglevel: INFO
