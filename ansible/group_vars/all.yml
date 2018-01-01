@@ -65,12 +65,24 @@ users:
       - sudo
     sshkeys: |
       ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3uQtMr300gb2icmedgrYgsI/slCgS8mDkPS1G0rlEACyMund4lMo+C8vTnhfoq7CmWGFDuGXXMGcgnnhiN67EXf4xKwCiypmvV4hrisd5FDyluNvUo9wdsqcq3Nv8jNYid27uidgx2v1o4bjidV8F163M5OuQV/Ij1uYsoZ4GiZvLAq5W09twqThEcz9Us9PljQlpqMxoF68hEyL3FM7MioOPshQiENf/3yRohHTzcDYI369hjJu7OpFqp+VORDc/Lma8bOufd/jGZsOBSiV9wjwYLHUHJsSzYv2Cg+jdmUnYjfqUsabwH1bjTVtiRKiXfZMeFF8ju5d9I7ExNp4x appleboy@gitea.io
+  - name: lafriks
+    uid: 1004
+    shell: /bin/bash
+    castles:
+      - tboerger/homeshick-base
+      - tboerger/homeshick-vim
+      - tboerger/homeshick-linux
+    groups:
+      - sudo
+    sshkeys: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAB+wCwJEbmp2zS0aREkMdUGyfinYTCsb56Cprbr+Oe1WMpsuf0efBUy5ZJ0AIfsfT40elnzyxCpw2m5WlzR1TgpEOMcuB21dqhqA5L10eoWjbMXf5N2fyeKMUguBjuIwemzRj2sIQwAoDY3FWfafrUwwswtbIBkZWT4kiwXwOqsXgzkqGf+w37oP0XhxF+HliN9qwx95RVQa9322ErLlRN4tsJs0qv6XyZGmyWO934ksPCsHXuPwz2iONXUWzf9SeTSJEfQyNup++LqMaXVbTggc+fNzJM5tyDAFLxbMSdVmbey7MAeluWLe5MKlBysFnlE68nXh8aoB11gr+w1+o6DTntbjjUlzpw5yTMnRMVHMOEDcBOv5ABaOU8D7jm45GnFtcH/hnPYecOWP639x7M20QGT4Z/9pN7WVlSyxW2lha2t2oi2Gn+5VEcN5YKsHKW7TyH1mg+miumwwR8Nvq93M7dnncA1+T/w1waJUriYGjYszqMMkhx/HVLo5ySdB2nsn0qkCP1/9RMn+3vVbyCiqeZOodo8iNRrdrwKJss9SH9AwHwodFfaoF0wgYbbGtB6frX1mRB1Z6UMlef4NomuPnXfMJxrrdFcbyyOIQQhzZg1EhoHF8BS5/laqw/DFg2xQ41cAVk8VludwBNeICI0ow+tR4wUyWeoA3cPQ== lauris@nix.lv
 
 users_available:
   - tboerger
   - lunny
   - bkc
   - appleboy
+  - lafriks
 
 traefik_cloudflare_email: !vault |
   $ANSIBLE_VAULT;1.1;AES256
