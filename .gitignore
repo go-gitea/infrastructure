@@ -2,3 +2,4 @@
 
 playbook.retry
 terraform.tfstate.backup
+terraform/.terraform

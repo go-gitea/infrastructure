@@ -12,7 +12,7 @@ resource "digitalocean_droplet" "server" {
   ipv6               = true
   backups            = true
   private_networking = false
-  resize_disk        = false
+  resize_disk        = true
 }
 
 resource "cloudflare_record" "serverv4" {
