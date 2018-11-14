@@ -20,12 +20,20 @@ services:
       - S3_ENDPOINT=storage.gitea.io
       - S3_PROTO=https
       - S3_HOST=storage.gitea.io
+      - S3_EXTRA=/releases/
     networks:
       - traefik
     labels:
       - traefik.docker.network=traefik_general
       - traefik.port=80
       - traefik.frontend.rule=Host:${DOWNLOADS_DOMAIN}
+    healthcheck:
+      test: ["CMD", "wget", "-O", "-", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
 
   minio:
     image: ${MINIO_CONTAINER}
