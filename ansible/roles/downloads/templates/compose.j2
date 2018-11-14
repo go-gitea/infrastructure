@@ -14,21 +14,18 @@ services:
     image: ${DOWNLOADS_CONTAINER}
     restart: always
     environment:
-      - CADDY_WEBROOT=/var/lib/minio/releases
+      - S3_KEY=${MINIO_ACCESS}
+      - S3_SECRET=${MINIO_SECRET}
+      - S3_BUCKET=releases
+      - S3_ENDPOINT=storage.gitea.io
+      - S3_PROTO=https
+      - S3_HOST=storage.gitea.io
     networks:
       - traefik
     labels:
       - traefik.docker.network=traefik_general
-      - traefik.port=8080
+      - traefik.port=80
       - traefik.frontend.rule=Host:${DOWNLOADS_DOMAIN}
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    volumes:
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
-      - server:/var/lib/minio
 
   minio:
     image: ${MINIO_CONTAINER}
