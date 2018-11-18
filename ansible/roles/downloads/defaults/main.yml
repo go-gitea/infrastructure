@@ -1,4 +1,4 @@
-downloads_container: webhippie/caddy:latest
+downloads_container: techknowlogick/caddy-s3browser:latest
 downloads_domain: dl.gitea.io
 
 minio_container: webhippie/minio:latest
