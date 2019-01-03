@@ -1,6 +1,6 @@
 drone_domain: drone.gitea.io
 drone_orgs: go-gitea
-drone_admins: tboerger,lunny,bkcsoft,appleboy
+drone_admins: lafriks,lunny,techknowlogick
 drone_max_procs: 2
 drone_github: true
 

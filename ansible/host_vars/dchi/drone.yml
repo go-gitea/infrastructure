@@ -1,6 +1,6 @@
 drone_domain: drone.try.gitea.io
 drone_orgs: gitea
-drone_admins: tboerger,lunny,bkcsoft,appleboy
+drone_admins: lafriks,lunny,techknowlogick
 drone_max_procs: 1
 drone_gitea: true
 drone_gitea_url: https://try.gitea.io
