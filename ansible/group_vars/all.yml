@@ -47,6 +47,7 @@ users:
 users_available:
   - lunny
   - lafriks
+  - techknowlogick
 
 traefik_cloudflare_email: !vault |
   $ANSIBLE_VAULT;1.1;AES256
